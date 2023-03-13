@@ -22,7 +22,7 @@
 ## 요구사항<a name='1'></a>
 
 - UMG와 RPC, 리플리케이트에 대한 이해가 거의 됐을 쯤 과제가 내려왔습니다.
-  <img src="https://user-images.githubusercontent.com/91234912/221451388-949656de-5ce6-4640-ad2e-d7beef33cb83.PNG" width="50%">
+  <img src="https://user-images.githubusercontent.com/91234912/221451388-949656de-5ce6-4640-ad2e-d7beef33cb83.PNG" width="100%">
   
   1. 각 말에 체력 공격력이 있을 것
   2. 상대방 말의 체력이 0일 때만 이동 가능할 것
@@ -36,3 +36,7 @@
   멀티로 만들어야 하는 점을 생각하며 일반적인 장기를 먼저 제작합니다.
   
   ## 사용 모델<a name='1'></a>
+  
+  - 에픽스토어에는 장기말 에셋이 없었습니다. 무료 3D STL 모델을 찾아서 FBX로 변환해서 사용합니다.
+  - 유니티와 언리얼은 모두 FBX기반으로 3D모델을 사용하기 때문에 변환이 가능하면 사용할 수 있습니다.
+  <img src="https://user-images.githubusercontent.com/91234912/221480759-eac24139-c3eb-4f50-af17-32e9c8c2c67e.png" width="100%">
