@@ -68,7 +68,8 @@
 
 ## 1 주차<a name='4'></a>
 - 기물이 이동할 위치를 표시해 줄 보드를 만들어야 합니다.
-장기보드는 9 * 10 크기입니다. 영상을 참고해서 블루프린트로 제작해 봅니다.
-|소스|결|
+장기보드는 9 * 10 크기입니다. 영상을 참고해서 블루프린트로 제작해 봅니다.<br>
+
+|블루프린트|결과|
 |:-----:|:-----:|
 |<img src="https://user-images.githubusercontent.com/91234912/221480770-1af75dad-dec4-4776-b0f5-12dfa3fa3427.png" width="300">|<img src="https://user-images.githubusercontent.com/91234912/221480744-94a69f57-81ea-4a18-8ebf-be6b0a75be68.png" width="300">|
