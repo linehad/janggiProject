@@ -60,6 +60,6 @@
 <br>
 하지만 말을 움직이는 로직은 그림처럼 각자 가지고 있으며, 필요한 정보를 주고 받으면서 동기화 하는 형태로 작성합니다
 
- [![관련동영상1]https://user-images.githubusercontent.com/91234912/224972892-e8bcd537-a228-4a70-8e05-35a795cb9ab5.png](https://www.youtube.com/watch?v=uN7LySVtRdI)
+  [![관련동영상1](https://user-images.githubusercontent.com/91234912/224972892-e8bcd537-a228-4a70-8e05-35a795cb9ab5.png)](https://www.youtube.com/watch?v=uN7LySVtRdI)
  <br>
  장기는 어느정도 체스와 유사하므로 해당 동영상을 참고해 필요한 기능을 만듭니다.
