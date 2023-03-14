@@ -91,3 +91,6 @@
 |배열|결과|
 |:-----:|:-----:|
 |<img src="https://user-images.githubusercontent.com/91234912/221480748-c2443aa2-7cc2-4acd-8428-cbe19b671924.png" width="300">|<img src="https://user-images.githubusercontent.com/91234912/221480750-95b4adcb-d940-412f-9af0-0ba47231547e.png" width="300">|
+
+<br>
+장기알의 가짓수는 총 14가지, 한나라 7개 초나라 7개입니다.
