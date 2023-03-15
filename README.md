@@ -98,8 +98,9 @@
 
 |블루프린트|소스코드|
 |:-----:|:-----:|
-|<img src="https://user-images.githubusercontent.com/91234912/225187327-8f93b8ba-353a-4331-9eaf-9b275bc4ba95.PNG" width="300">|<img src="https://user-images.githubusercontent.com/91234912/225187684-ae08acd6-9849-42a0-a3ee-22d8885c6f24.PNG" width="300">|
+|<img src="https://user-images.githubusercontent.com/91234912/225187327-8f93b8ba-353a-4331-9eaf-9b275bc4ba95.PNG" width="400">|<img src="https://user-images.githubusercontent.com/91234912/225187684-ae08acd6-9849-42a0-a3ee-22d8885c6f24.PNG" width="500">|
 
 select를 이용해 배열을 읽어오고 인덱스에 알맞은 값을 월드에 생성하는 방식으로 작동합니다.<br>
-배열을 C++로 이동시킵니다. 배열은 GameState에 있으며, 캡슐화를 위해서 함수 형태로 리턴해 줍니다.<br>
+스태틱 메쉬 안쪽에 Plane은 배열 인덱스 값이 0이 아닐때 채워지게 됩니다.<br><br>
+그리고 배열을 C++로 이동시킵니다. 배열은 GameState에 있으며, 캡슐화를 위해서 함수 형태로 리턴해 줍니다.<br>
 또한 블루프린트에서만 사용할 것이 아니므로 const 지정자를 이용해 다른곳에서 수정이 불가능하게 바꿉니다.
