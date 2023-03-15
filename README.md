@@ -102,5 +102,37 @@
 
 select를 이용해 배열을 읽어오고 인덱스에 알맞은 값을 월드에 생성하는 방식으로 작동합니다.<br>
 스태틱 메쉬 안쪽에 Plane은 배열 인덱스 값이 0이 아닐때 채워지게 됩니다.<br><br>
-그리고 배열을 C++로 이동시킵니다. 배열은 GameState에 있으며, 캡슐화를 위해서 함수 형태로 리턴해 줍니다.<br>
-또한 블루프린트에서만 사용할 것이 아니므로 const 지정자를 이용해 다른곳에서 수정이 불가능하게 바꿉니다.
+그리고 배열을 C++로 이동시킵니다. 배열은 GameState에 있으며, 캡슐화를 위해서 함수 형태로 리턴해 줍니다. 또한 블루프린트에서만 사용할 것이 아니므로 const 지정자를 이용해 다른곳에서 수정이 불가능하게 바꿉니다.
+<br><br>
+새로운 레벨을 만들고 UMG를 이용해서 호스트로 시작할지 호스트를 찾을지 결정할 수 있는 버튼을 제작합니다.<br>
+<img src="https://user-images.githubusercontent.com/91234912/221480754-68601420-cbc8-48ad-853c-9b764d5ebf3e.png" width="500"><br><br>
+
+- ServerUserWidget.cpp 호스트로 시작하는 코드
+```c++
+void UServerUserWidget::ServerButtonCallback()
+{
+	UGameplayStatics::OpenLevel(this, FName(TEXT("JanggiMap")), true, FString(TEXT("listen")));
+}
+```
+<br>호스트 버튼이 눌릴경우 레벨이 JanggiMap으로 넘어가면서 리슨서버로 시작하게 됩니다.<br>
+
+- ServerUserWidget.cpp 호스트를 찾는 코드
+```c++
+void UServerUserWidget::ClientButtonCallback()
+{
+	FName ip = FName(*ip_EditableTextBox->GetText().ToString());
+	UGameplayStatics::OpenLevel(this, ip, true);
+}
+
+void UServerUserWidget::IP_EditableTextBoxCallback(const FText& Text)
+{
+	if (ip_EditableTextBox->GetText().ToString().Len() <= 0)
+	{
+		ClientButton->SetIsEnabled(false);
+	}
+	else {
+		ClientButton->SetIsEnabled(true);
+	}
+}
+```
+ip를 입력하지 않았을 때 버튼이 비활성화 되고, 클라이언트로 시작 버튼이 눌렸을 때, 입력된 ip를 토대로 서버를 찾게 됩니다.
