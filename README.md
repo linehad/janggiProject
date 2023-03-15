@@ -149,3 +149,37 @@ ip를 입력하지 않았을 때 버튼이 비활성화 되고, 클라이언트�
 
 ## 2 주차<a name='5'></a>
  [목차로 돌아가기](#0)<br>
+
+이제 장기말을 옮기기 위한 준비를 합니다. 이동방식은 마우스 아래에 있는 엑터를 읽고 좌표를 배열에 맞게 변환합니다.<br>
+
+<img src=".png" width="800"><br>
+
+해당좌표의 인덱스를 전달하고 이를 통해서 좌표값을 인지합니다.
+
+<img src="https://user-images.githubusercontent.com/91234912/221480753-0605a80a-a09d-457c-b9ac-6a9161879f4c.png" width="800"><br>
+
+마우스를 클릭해서 좌표로그를 찍어보면 잘 출력되는 것을 확인 할 수 있습니다. 이 좌표값을 다음 함수로 1차원 배열에 적용할 수 있게 값을 변환해 줍니다.
+<img src="https://user-images.githubusercontent.com/91234912/221480858-72b47071-a8b5-4520-958c-37300ae20f95.png" width="800"><br>
+
+이렇게 변환시킨 좌표의 인덱스 값의 메테리얼을 변환시키는 블루프린트를 작성한 뒤 해당 지점을 마우스로 클릭해 봅니다.
+
+|위치|결과|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221480861-03a6ef56-dc53-45df-a59a-2b0aec8ee000.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480860-55b2c5e3-79a2-4bca-8b24-07ef78a140c0.png" width="500">|
+<br>
+보이는 것처럼 0, 0 자리를 클릭했을 때 해당 위치의 메테리얼이 바뀐 것을 확인 할 수 있습니다.
+<br>
+하지만 여러번 클릭할 수 없었는데 이는 블루프린트의 Construction Script를 사용하여 생긴 문제였습니다.<br>
+<img src="https://user-images.githubusercontent.com/91234912/221480853-07d0f46b-4216-42ee-b779-d4c591f01bb5.png" width="800">
+생성자에서는 성공적으로 초기화되었다고 결과가 나왔고 첫 실행에는 이상이 없었지만 Begin Play 이벤트와는 달리 처음 생성된 이후에는 초기화작업이 진행되지 않았습니다.<br>
+이는 레벨에 배치된 이후 초기화가 되지 않고 계속해서 데이터가 쌓였기 때문에 생긴 오류였습니다.
+
+|디버깅1|디버깅2|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221480854-643cd92f-6782-4c83-9fda-26aa365a8533.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480857-8c8e506a-50bd-4bd0-a773-0414da095164.png" width="500" height ="120">|
+
+배열은 0부터 89까지만 있어야 정상이지만 배열의 크기가 초기화되지 않고 엔진이 실행되는 동안 add로 계속해서 쌓이면서 600개가 넘는 쓰래기 값이 만들어졌습니다. <br>
+따라서 null로 초기화되어서 없어진 값을 찾으려고 하니 당연히 작동하지 않습니다.<br>
+<br>
+이 오류를 해결하기 위해 만든 코드를 Begin Play로 옮깁니다.<br>
+더 이상 게임 실행전에 레벨에서는 어떻게 배치되는지 확인 할 수 없어졌지만, 이제는 정상적으로 동작합니다.
