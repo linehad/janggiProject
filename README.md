@@ -45,7 +45,7 @@
 따라서 이를 FBX로 변환해서 언리얼 엔진에 Import 시키고 레벨에 배치해보면 다음과 같이 나타납니다.
 |왕|차|
 |:-----:|:-----:|
-|<img src="https://user-images.githubusercontent.com/91234912/221480764-19290943-1f85-43cf-ab1d-fb9d04b0f600.png" width="300">|<img src="https://user-images.githubusercontent.com/91234912/221480760-391f45bb-8b7f-46fb-8254-e4dae2db2a33.png" width="300">|
+|<img src="https://user-images.githubusercontent.com/91234912/221480764-19290943-1f85-43cf-ab1d-fb9d04b0f600.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480760-391f45bb-8b7f-46fb-8254-e4dae2db2a33.png" width="500">|
 
  <br>
 스태틱메시로 성공적으로 임포트 되었지만 사진처럼 피벗이 중앙에서 벗어난 것을 볼수 있는데 이는
