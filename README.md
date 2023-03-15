@@ -138,4 +138,11 @@ void UServerUserWidget::IP_EditableTextBoxCallback(const FText& Text)
 ```
 ip를 입력하지 않았을 때 버튼이 비활성화 되고, 클라이언트로 시작 버튼이 눌렸을 때, 입력된 ip를 토대로 서버를 찾게 됩니다.<br><br>
 
--현실에서 장기를 할 경우 서로 바라보는 시점이 다릅니다. 
+-현실에서 장기를 할 경우 서로 바라보는 시점이 다릅니다. 따라서 레벨에 카메라를 2개 배치해 놓고 서버, 클라에 따라서 빙의되는 카메라가 다르게 하면 됩니다.
+
+<img src=".png" width="500"><br>
+레벨 블루프린트에서 오소리티에 따라서 빙의되는 카메라를 다르게 설정한 후 시점을 살펴보면<br>
+
+<img src="https://user-images.githubusercontent.com/91234912/221480755-df7762f0-7b5d-42c7-ad49-9f858604c36e.png" width="500"><br>
+
+서버와 클라이언트가 바라보는 시점이 다르다는 것을 확인할 수 있습니다.
