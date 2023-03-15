@@ -72,7 +72,7 @@
 
 |블루프린트|결과|
 |:-----:|:-----:|
-|<img src="https://user-images.githubusercontent.com/91234912/221480770-1af75dad-dec4-4776-b0f5-12dfa3fa3427.png" width="300">|<img src="https://user-images.githubusercontent.com/91234912/221480744-94a69f57-81ea-4a18-8ebf-be6b0a75be68.png" width="300">|
+|<img src="https://user-images.githubusercontent.com/91234912/221480770-1af75dad-dec4-4776-b0f5-12dfa3fa3427.png" width="700">|<img src="https://user-images.githubusercontent.com/91234912/221480744-94a69f57-81ea-4a18-8ebf-be6b0a75be68.png" width="300">|
 <br>
 이제 만들어진 보드의 위치에 알맞게 장기알을 배치해야 합니다.<br>
 하지만 그전에 가져온 모델은 가운데 글자부분이 뚫려있는 형태입니다.<br>
@@ -81,7 +81,7 @@
 
 |에셋|결과|
 |:-----:|:-----:|
-|<img src="https://user-images.githubusercontent.com/91234912/221480765-e7a01620-a3d2-4852-9e22-93b494087b37.png" width="300">|<img src="https://user-images.githubusercontent.com/91234912/221480767-0a259071-6459-4e4e-a673-c050b370ab7b.png" width="300">|
+|<img src="https://user-images.githubusercontent.com/91234912/221480765-e7a01620-a3d2-4852-9e22-93b494087b37.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480767-0a259071-6459-4e4e-a673-c050b370ab7b.png" width="500">|
 
 <br>
 보기 편하게 크게 만들었지만 축소시켜서 장기알 내부에 넣어줍니다.<br>
@@ -90,7 +90,7 @@
 
 |배열|결과|
 |:-----:|:-----:|
-|<img src="https://user-images.githubusercontent.com/91234912/221480748-c2443aa2-7cc2-4acd-8428-cbe19b671924.png" width="300">|<img src="https://user-images.githubusercontent.com/91234912/221480750-95b4adcb-d940-412f-9af0-0ba47231547e.png" width="300">|
+|<img src="https://user-images.githubusercontent.com/91234912/221480748-c2443aa2-7cc2-4acd-8428-cbe19b671924.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480750-95b4adcb-d940-412f-9af0-0ba47231547e.png" width="500">|
 
 <br>
 장기알의 가짓수는 총 14가지, 한나라 7개 초나라 7개입니다.<br>
