@@ -140,7 +140,7 @@ ip를 입력하지 않았을 때 버튼이 비활성화 되고, 클라이언트�
 
 -현실에서 장기를 할 경우 서로 바라보는 시점이 다릅니다. 따라서 레벨에 카메라를 2개 배치해 놓고 서버, 클라에 따라서 빙의되는 카메라가 다르게 하면 됩니다.
 
-<img src=".png" width="500"><br>
+<img src="https://user-images.githubusercontent.com/91234912/225568327-85e795ea-4ebe-4a76-ae87-b3038638d1a1.png" width="800"><br>
 레벨 블루프린트에서 오소리티에 따라서 빙의되는 카메라를 다르게 설정한 후 시점을 살펴보면<br>
 
 <img src="https://user-images.githubusercontent.com/91234912/221480755-df7762f0-7b5d-42c7-ad49-9f858604c36e.png" width="800"><br>
@@ -152,7 +152,7 @@ ip를 입력하지 않았을 때 버튼이 비활성화 되고, 클라이언트�
 
 이제 장기말을 옮기기 위한 준비를 합니다. 이동방식은 마우스 아래에 있는 엑터를 읽고 좌표를 배열에 맞게 변환합니다.<br>
 
-<img src=".png" width="800"><br>
+<img src="https://user-images.githubusercontent.com/91234912/225569178-c0dd95a5-e0e7-4c4b-a50c-8e1896647cb9.png" width="800"><br>
 
 해당좌표의 인덱스를 전달하고 이를 통해서 좌표값을 인지합니다.
 
