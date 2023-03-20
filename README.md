@@ -185,4 +185,76 @@ ip를 입력하지 않았을 때 버튼이 비활성화 되고, 클라이언트�
 이 오류를 해결하기 위해 만든 코드를 Begin Play로 옮깁니다.<br>
 더 이상 게임 실행전에 레벨에서는 어떻게 배치되는지 확인 할 수 없어졌지만, 이제는 정상적으로 동작합니다.<br>
 <br>
-이제 말을 클릭 한 상태에서 다른 곳을 누를 경우 이동
+추가적으로 변환된 좌표값을 토대 말을 클릭 한 상태에서 다른 곳을 누를 경우 이동을 구현합니다.<br>
+<img src="https://user-images.githubusercontent.com/91234912/226251420-bb0db18c-3394-4558-b591-c7bbaadc31c0.png" width="800"><br>
+
+처음 클릭시 CkeckMove 함수가 실행되고 두번째 클릭시 처음 클릭한 말을 클릭한 위치로 이동시키는 IsMove 함수가 실행됩니다.<br>
+<img src="https://user-images.githubusercontent.com/91234912/221480850-75ba1ac0-669b-4e0c-b3bf-e7141e47cf16.png" width="800"><br>
+실행해보면 아직은 서버 클라에서 서로 이동한 것이 보이진 않지만 말이 이동한 것을 확인할 수 있습니다.<br>
+
+## 3 주차<a name='6'></a>
+ [목차로 돌아가기](#0)<br>
+ 
+말을 옮기는 것을 토대로 기물의 움직임을 구현합니다. 장기 룰에 따라서 기물을 움직여 줄 것입니다.
+이를 구현하기 위해서는 말이 이동가능한 곳을 계산해서 해당 지점만 이동이 가능하게 만들면 됩니다.
+<br>
+이는 장기 JanggiPieces.cpp의 각 말에 맞는 함수에서 TArray<int32> 형태로 반환 할 것이며, 장기보드에서는 이동가능한 위치를 받아서 해당 위치만 이동할 수 있게 제한해 줄 것입니다.<br><br>
+
+```c++
+// 위쪽부터 반시계 방향 직선 탐색(상좌하우 마, 상, 차, 포를 위한 배열)
+	const int32 straightX[4] = { 0, -1, 0, 1 };
+	const int32 straightY[4] = { 1, 0, -1, 0 };
+
+	// 왼쪽 위부터 반시계 방향 대각선 탐색(좌상, 좌하, 우하, 우상 마, 상을 위한 배열 straightX, straightY와 맞물리면서 돌아간다.)
+	const int32 diagonalX[4] = { -1, -1, 1, 1 };
+	const int32 diagonalY[4] = { 1, -1, -1, 1 };
+```
+<br>
+방향이 들어있는 배열을 이용해서 탐색하게 됩니다. 차의 경우 궁에 들어갔을 때만 대각선 이동이 가능하며, 나머지는 직선이동입니다. <br>
+
+```c++
+nx = xIndex + straightX[i];
+		ny = yIndex + straightY[i];
+		curPos = Board_index(nx, ny);
+		bisMove = IsMove(boardIndexArr, xIndex, yIndex, curPos);
+
+		while (nx < X_SIZE && ny < Y_SIZE && nx >= 0 && ny >= 0 &&
+			curPos >= 0 && curPos < BOARD_SIZE &&
+			bisMove) // curPos가 배열을 초과하지 않고 다음 이동할 위치가 비어있으면 이동이 가능하다.
+		{
+
+			if (nx >= X_SIZE || ny >= Y_SIZE && nx < 0 || ny < 0)break;
+
+			possibleMove.Add(curPos);
+			nx += straightX[i];
+			ny += straightY[i];
+			curPos = Board_index(nx, ny);
+			bisMove = IsMove(boardIndexArr, xIndex, yIndex, curPos);
+		}
+	}
+	return possibleMove;
+```	
+<br>
+배열을 초과하지 않는 선에서 말이 클릭된 지점에서 직선 움직임을 계산합니다. 이를 적용해 보면<br>
+<img src="https://user-images.githubusercontent.com/91234912/221480939-421d6aa2-dc93-4def-bd34-78962d4f7adc.png" width="800"><br>
+
+다음과 같이 나옵니다. 아직 앞에 말이 있건 없건 맵의 끝까지 탐색하기 때문입니다. 여기서 추가적으로 차는 궁 안에 들어 갈 경우 대각선 이동이 가능합니다.<br>
+<img src="https://user-images.githubusercontent.com/91234912/221480954-8450e3d6-4058-4ee6-b12b-1d2625779f4a.png" width="800"><br>
+
+좌표를 엑셀로 표현해 보았습니다. 궁 위치가 X값은 동일한데 Y값만 달라지는 것을 볼 수 있습니다.<br>
+이를 참고해서 차의 대각선 이동을 구현합니다.<br>
+
+|대각 상|대각 하|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481052-33477776-932e-4772-ad95-4481da503599.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481045-1c2408cf-0ec5-4d78-a07f-83058fdd63ab.png" width="500">|
+<br>
+한나라, 초나라 궁 범위 내에서만 대각선 이동이 가능해 졌습니다.<br>
+이를 활용해서 포도 제작합니다. 포는 차와 비슷하지만 말을 뛰어 넘습니다. 직선 탐색시 말을 만나면 그 말의 뒤쪽부터 이동이 가능하게 만듭니다.<br>
+
+|포 1|포 2|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221480905-39afa258-f774-4ad1-9ddc-61badbf36861.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480946-9e873157-6662-4ca9-b9f2-10e6a0cb57ad.png" width="500">|
+
+
+## 4 주차<a name='7'></a>
+ [목차로 돌아가기](#0)<br>
