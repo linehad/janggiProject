@@ -344,3 +344,6 @@ IsMove함수에 조건을 추가하고 CheckEnemy 함수를 작성해서 적과 
 
 ## 4 주차<a name='7'></a>
  [목차로 돌아가기](#0)<br>
+상의 경우 마에서 대각선으로 한칸만 더 이동 탐색하면 됩니다.<br>
+<img src="https://user-images.githubusercontent.com/91234912/226301415-13958098-24f0-46ea-b47f-a192c12bdc92.PNG" width="800"><br>
+구현하면 다음과 같이 보입니다. 이제 모든 말의 이동이 완료되었습니다.
