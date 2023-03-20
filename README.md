@@ -327,13 +327,20 @@ IsMove함수에 조건을 추가하고 CheckEnemy 함수를 작성해서 적과 
 <br>
 이제 필드메쉬를 동그랗게 바꿔 줍니다. 또한 선택한 말의 위치에 있는 필드를 확대해 주고 금색의 메테리얼을 바위 메테리얼로 바꿔줍니다..
 <br>
-<img src="https://user-images.githubusercontent.com/91234912/221481023-b3839ccf-0cd6-4ae8-8287-910a642f7cd1.png" width="800"><br>
+<img src="https://user-images.githubusercontent.com/91234912/221481023-b3839ccf-0cd6-4ae8-8287-910a642f7cd1.png" width="800"><br><br>
 이렇게 만들어진 필드의 Z좌표를 더해주고 보드를 입히면 다음과 같이 보이게 됩니다.
 
-|보드 1|보 2|
+|보드 1|보드 2|
 |:-----:|:-----:|
 |<img src="https://user-images.githubusercontent.com/91234912/221480911-b5311188-ecf1-4f85-9111-824926aefe02.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480916-f85e2c20-15ef-4541-8571-0903f3dd0937.png" width="500">|
+<br><br>
+
+장기는 상차림을 선택해서 상과 마의 위치를 바꿀 수가 있는데, 이를 위한 위젯을 작성합니다.
+|보드 1|보드 2|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221480917-e97c86e5-078b-4311-a678-1d42ae2e8f7a.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480920-69ef294d-2bef-45d0-bd6d-288b5f9860c2.png" width="500">|
 <br>
+위젯의 경우 버튼을 상차림을 선택하기 전까지 선택완료 버튼이 비활성화 됩니다.
 
 ## 4 주차<a name='7'></a>
  [목차로 돌아가기](#0)<br>
