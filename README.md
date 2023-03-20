@@ -255,6 +255,25 @@ nx = xIndex + straightX[i];
 |:-----:|:-----:|
 |<img src="https://user-images.githubusercontent.com/91234912/221480905-39afa258-f774-4ad1-9ddc-61badbf36861.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480946-9e873157-6662-4ca9-b9f2-10e6a0cb57ad.png" width="500">|
 
+포가 말이 없을 때는 이동하지 못하지만 말이 있을 경우에는 이동이 가능해 진것을 볼 수 있습니다.<br>
+하지만 포는 포끼리 먹을 수 없고 포끼리 넘을 수 없습니다. 제약을 추가해 줍니다.<br>
+
+|포 제약1|포 제약2|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221480984-a942a963-11d7-4568-a733-a81d47db467d.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480975-bb543e85-9b68-46e5-944c-fa0a3e36e686.png" width="500">|
+<br>
+더 이상 포는 포끼리 넘을 수도 먹을 수도 없게 되었습니다.<br>
+<br>
+이제 궁과 사를 구현합니다. 궁과 사는 일정 범위 내에서만 움직일 수 있어야 합니다.<br>
+<img src="https://user-images.githubusercontent.com/91234912/221480984-a942a963-11d7-4568-a733-a81d47db467d.png" width="800"><br>
+
+제약을 추가해 봤을 때 궁 범위 바깥으로는 움직일 수 없는 것을 확인 할 수 있습니다. 하지만 궁 과 사는 1칸 범위에서 자유롭게 움직일 수 있는데, 특히 대각선 끝에 위치 한 경우 가운데로 움직일 수 있습니다.<br>
+가운데에 있는 경우에는 모든 방향으로 1칸 이동이 가능합니다. 이를 적용합니다.
+
+|궁 1|궁 2|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481040-a4b2df6a-cc81-4eb3-9646-172bcf1b4888.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481029-d3ce0a1a-92a3-4120-8a05-b4032560dc89.png" width="500">|
+|<img src="https://user-images.githubusercontent.com/91234912/221480956-3e75736f-82a4-4823-9c96-805e8ef020c9.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480960-3e396710-300d-41e3-ad53-a07ed803b7c0.png" width="500">|
 
 ## 4 주차<a name='7'></a>
  [목차로 돌아가기](#0)<br>
