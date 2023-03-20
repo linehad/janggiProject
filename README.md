@@ -275,5 +275,65 @@ nx = xIndex + straightX[i];
 |<img src="https://user-images.githubusercontent.com/91234912/221481040-a4b2df6a-cc81-4eb3-9646-172bcf1b4888.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481029-d3ce0a1a-92a3-4120-8a05-b4032560dc89.png" width="500">|
 |<img src="https://user-images.githubusercontent.com/91234912/221480956-3e75736f-82a4-4823-9c96-805e8ef020c9.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480960-3e396710-300d-41e3-ad53-a07ed803b7c0.png" width="500">|
 
+<br>
+마를 구현합니다. 마의 경우 상하좌우 중 한 방향으로 먼저 이동 했을 경우 막혀 있으면 그 방향으로 이동이 불가능합니다. 막혀있지 않으면 진행 방향 대각선으로 이동이 가능합니다. 이를 적용합니다.<br>
+
+|마 1|마 2|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221480932-3d6a31d5-b655-4f10-80d8-324aa5e4a3db.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481008-92214b4d-5b30-45cd-b33c-d1ab80546376.png" width="500">|
+<br>
+이제 졸을 구현합니다. 졸의 특징은 뒤로 이동할 수 없으며, 궁에 들어 갈 경우 진행방향 대각선으로 이동이 가능합니다. 이를 구현합니다.<br>
+
+|졸 1|졸 2|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221480964-41101024-bfed-4caa-94b7-3a43fa2ba209.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480969-a786b54f-59bc-4453-a390-e2d9d5358af3.png" width="500">|
+<br>
+
+```c++
+bool JanggiPieces::IsMove(const TArray<int32>& boardIndexArr, int32 xIndex, int32 yIndex, int32 curPos)
+{
+	bool bmove = false;
+	if (curPos >= 0 && curPos < BOARD_SIZE && // 맵 바깥으로 나가지 말아야 하고
+		(boardIndexArr[curPos] == EmptyHere || // 이동할 곳이 비어있거나
+		(boardIndexArr[Board_index(xIndex, yIndex)] > RED_TEAM && boardIndexArr[curPos] <= RED_TEAM) || // 현재 눌린 돌이 초나라고 갈 수 있는 위치에 한나라가 없어야 함
+		(boardIndexArr[Board_index(xIndex, yIndex)] <= RED_TEAM && boardIndexArr[curPos] > RED_TEAM)))  // 현재 눌린 돌이 한나라고 이동할 위치에 초나라가 있다면
+	{
+		bmove = true;
+	}
+		return bmove;
+}
+
+bool JanggiPieces::CheckEnemy(const TArray<int32>& boardIndexArr, int32 xIndex, int32 yIndex, int32 curPos)
+{
+	bool bmove = false;
+	if (curPos < 0 || curPos >= BOARD_SIZE) {} // 맵 바깥으로 나가지 말아야 한다.	
+	else if(
+		boardIndexArr[curPos] != EmptyHere && // 비어 있지 않고
+		(boardIndexArr[Board_index(xIndex, yIndex)] > RED_TEAM && boardIndexArr[curPos] <= RED_TEAM) || // 현재 눌린 돌이 초나라고 이동할 위치에 한나라가 있다면
+			(boardIndexArr[Board_index(xIndex, yIndex)] <= RED_TEAM && boardIndexArr[curPos] > RED_TEAM))  // 현재 눌린 돌이 한나라고 이동할 위치에 초나라가 있다면
+	{
+		bmove = true;
+	}
+	return bmove;
+}
+```
+<br>
+IsMove함수에 조건을 추가하고 CheckEnemy 함수를 작성해서 적과 아군을 식별하게 만듭니다. 적일 경우 거기 까지만 이동이 가능하고 아군일 경우 이동이 불가능하게 만들어 줍니다. 이를 적용하면 다음과 같습니다.<br>
+
+|기물 1|기물 2|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221480990-4b061b1e-1144-4f29-9c9d-eae04381153e.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480999-34b509d1-4538-4413-b236-1f0165e6013e.png" width="500">|
+|<img src="https://user-images.githubusercontent.com/91234912/221481005-058787d1-894c-4ee4-84e4-53cb5bc258e0.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481016-47f8dbfb-9e26-411a-a06f-85b2d9cf5c79.png" width="500">|
+<br>
+이제 필드메쉬를 동그랗게 바꿔 줍니다. 또한 선택한 말의 위치에 있는 필드를 확대해 주고 금색의 메테리얼을 바위 메테리얼로 바꿔줍니다..
+<br>
+<img src="https://user-images.githubusercontent.com/91234912/221481023-b3839ccf-0cd6-4ae8-8287-910a642f7cd1.png" width="800"><br>
+이렇게 만들어진 필드의 Z좌표를 더해주고 보드를 입히면 다음과 같이 보이게 됩니다.
+
+|보드 1|보 2|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221480911-b5311188-ecf1-4f85-9111-824926aefe02.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480916-f85e2c20-15ef-4541-8571-0903f3dd0937.png" width="500">|
+<br>
+
 ## 4 주차<a name='7'></a>
  [목차로 돌아가기](#0)<br>
