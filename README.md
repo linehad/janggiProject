@@ -200,6 +200,7 @@ ip를 입력하지 않았을 때 버튼이 비활성화 되고, 클라이언트�
 <br>
 이는 장기 JanggiPieces.cpp의 각 말에 맞는 함수에서 TArray<int32> 형태로 반환 할 것이며, 장기보드에서는 이동가능한 위치를 받아서 해당 위치만 이동할 수 있게 제한해 줄 것입니다.<br><br>
 
+-JanggiPieces.cpp
 ```c++
 // 위쪽부터 반시계 방향 직선 탐색(상좌하우 마, 상, 차, 포를 위한 배열)
 	const int32 straightX[4] = { 0, -1, 0, 1 };
@@ -289,6 +290,7 @@ nx = xIndex + straightX[i];
 |<img src="https://user-images.githubusercontent.com/91234912/221480964-41101024-bfed-4caa-94b7-3a43fa2ba209.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480969-a786b54f-59bc-4453-a390-e2d9d5358af3.png" width="500">|
 <br>
 
+-JanggiPieces.cpp
 ```c++
 bool JanggiPieces::IsMove(const TArray<int32>& boardIndexArr, int32 xIndex, int32 yIndex, int32 curPos)
 {
@@ -346,4 +348,46 @@ IsMove함수에 조건을 추가하고 CheckEnemy 함수를 작성해서 적과 
  [목차로 돌아가기](#0)<br>
 상의 경우 마에서 대각선으로 한칸만 더 이동 탐색하면 됩니다.<br>
 <img src="https://user-images.githubusercontent.com/91234912/226301415-13958098-24f0-46ea-b47f-a192c12bdc92.PNG" width="500"><br>
-구현하면 다음과 같이 보입니다. 이제 모든 말의 이동이 완료되었습니다.
+구현하면 다음과 같이 보입니다. 이제 모든 말의 이동이 완료되었습니다. 저번주에 만들었던 위젯을 통해서 상차림을 구현합니다.<br>
+상차림 구현 전에 서버 클라이언트 모두 선택 완료를 누를 경우에 게임이 시작하게 바꿉니다.<br>
+
+-SelectPositionUserWidget.cpp
+```c++
+void USelectPositionUserWidget::StartButtonCallback()
+{
+	SoundManager->PlaySound(ButtonClickSoundEffect, ButtonVol);
+	TArray<AActor*> OutActors;
+	ABoard* JanggiBoard = nullptr;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABoard::StaticClass(), OutActors);
+	for (AActor* a : OutActors)
+	{
+		JanggiBoard = Cast<ABoard>(a);
+	}
+
+	Start_TextBlock->SetText(FText::FromString("Waiting"));
+	Start_Button->SetIsEnabled(false);
+	Select_Button1->SetVisibility(ESlateVisibility::HitTestInvisible);
+	Select_Button2->SetVisibility(ESlateVisibility::HitTestInvisible);
+	Select_Button3->SetVisibility(ESlateVisibility::HitTestInvisible);
+	Select_Button4->SetVisibility(ESlateVisibility::HitTestInvisible);
+
+	if (GetWorld()->GetFirstPlayerController()->GetLocalRole() == ROLE_Authority)
+	{
+		Controller->SetServerIsReady();
+	}
+	else if (GetWorld()->GetFirstPlayerController()->GetRemoteRole() == ROLE_Authority)
+	{
+		Controller->SetClientIsReady();
+	}
+}
+```
+<br>	
+선택완료 버튼이 눌리면 RPC를 사용하기 위해 다음과 같이 접근한다. (플레이어 컨트롤러의 서버 RPC 함수 -> 게임 모드)<br>
+게임모드에서 클라와 서버가 준비가 되면, 게임을 시작한다. 둘 중 하나라도 준비가 되지 않았다면 대기한다.<br>
+	
+|서버|클라이언트|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481100-2e8dfe4c-8b7e-4cdd-a9ee-58fea09dd41d.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481095-328f0c1a-137e-42b1-b096-07cc3aad54f0.png" width="500">|
+<br>
+각각 준비가 되지 않으면 시작하지 않는다.
+	
