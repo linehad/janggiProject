@@ -382,12 +382,12 @@ void USelectPositionUserWidget::StartButtonCallback()
 }
 ```
 <br>	
-선택완료 버튼이 눌리면 RPC를 사용하기 위해 다음과 같이 접근한다. (플레이어 컨트롤러의 서버 RPC 함수 -> 게임 모드)<br>
-게임모드에서 클라와 서버가 준비가 되면, 게임을 시작한다. 둘 중 하나라도 준비가 되지 않았다면 대기한다.<br>
+선택완료 버튼이 눌리면 RPC를 사용하기 위해 다음과 같이 접근합니다. (플레이어 컨트롤러의 서버 RPC 함수 -> 게임 모드)<br>
+게임모드에서 클라와 서버가 준비가 되면, 게임을 시작하며, 둘 중 하나라도 준비가 되지 않았다면 대기합니다.<br>
 	
 |서버|클라이언트|
 |:-----:|:-----:|
 |<img src="https://user-images.githubusercontent.com/91234912/221481100-2e8dfe4c-8b7e-4cdd-a9ee-58fea09dd41d.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481095-328f0c1a-137e-42b1-b096-07cc3aad54f0.png" width="500">|
 <br>
-각각 준비가 되지 않으면 시작하지 않는다.
+각각 준비가 되지 않으면 시작하지 않.
 	
