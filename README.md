@@ -425,3 +425,21 @@ void USelectPositionUserWidget::SelectButton1_Callback() // 마상마상
 |:-----:|:-----:|
 |<img src="https://user-images.githubusercontent.com/91234912/221481110-bfd4f941-8856-4d31-95e6-9a1c382764df.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481115-de66fae4-0a47-4f2a-aa91-ba43a60efb99.png" width="500">|
 |<img src="https://user-images.githubusercontent.com/91234912/221481118-fed3887a-4541-4c07-b3f0-7e9dd8dde16f.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481124-7bcf09db-c51d-42f4-aad7-00f2fbdfc19a.png" width="500">|
+<br>
+
+서로 상차림이 변경된 것을 확인할 수 있습니다. 이제 이동을 동기화 합니다.<br>
+
+|서버|클라이언트|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481107-91efab6f-67c7-426c-b5d7-76327a7e3978.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481109-af9cf953-a089-4714-8d11-a153e257f6f8.png" width="500">|
+<br>
+서버는 서버에서 먼저 장기를 두고, 클라이언트에서 서버의 움직임을 재현합니다.<br>
+클라이언트는 클라에사 먼저 두고 서버에서 두게합니다. 이렇게 함으로써 서로의 움직임이 동기화 됩니다.
+<br>
+<img src="https://user-images.githubusercontent.com/91234912/221481139-a5b05888-c5eb-4a55-ad77-340002bb8d31.png" width="800"><br>
+
+이제 서로 움직임이 동기화 되었습니다. 착수 위치까지 보여주는 이유는 나중에 스킬 구현을 위해서 입니다.<br>
+<img src="https://user-images.githubusercontent.com/91234912/221481150-7a5c8db1-bd30-4d3f-be93-b43b71a37a26.png" width="800"><br>
+서버랑 클라가 한템포 늦게 움직이는 문제가 발생해서 기존에는 Sleep을 이용해서 한템포 쉬었다가 움직이게 만들었었는데, 잘못된 방법이었습니다.<br>
+오류의 이유는 서버가 먼저 움직일 경우 서버->클라 순서대로 동작해서 문제가 없었지만 클라가 움직일 경우 클라->서버 순서대로 동작했기 때문에 문제가 생긴것이였습니다.<br>
+따라서 구조적으로 무조건 서버가 움직인 후에 클라가 움직이게 로직을 변경하여 해결하였습니다.<br>
