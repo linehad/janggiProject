@@ -389,5 +389,39 @@ void USelectPositionUserWidget::StartButtonCallback()
 |:-----:|:-----:|
 |<img src="https://user-images.githubusercontent.com/91234912/221481100-2e8dfe4c-8b7e-4cdd-a9ee-58fea09dd41d.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481095-328f0c1a-137e-42b1-b096-07cc3aad54f0.png" width="500">|
 <br>
-각각 준비가 되지 않으면 시작하지 않습니다.
+각각 준비가 되지 않으면 시작하지 않습니다.<br>
 	
+-SelectPositionUserWidget.cpp<br>
+
+```c++
+void USelectPositionUserWidget::SelectButton1_Callback() // 마상마상
+{
+	Select_Button1->SetIsEnabled(false); Select_Button2->SetIsEnabled(true); Select_Button3->SetIsEnabled(true); Select_Button4->SetIsEnabled(true);
+	bSelect = true;
+	// 1 : 마, 2 : 상, 6 : 상, 7 : 마
+	// 82 : 마, 83 : 상, 87 : 상 88 : 마
+	// 이 위치만 바꾸면 됨
+	if (GetWorld()->GetFirstPlayerController()->GetLocalRole() == ROLE_Authority)
+	{
+		Controller->SelectPosition(1, RedKnight); // 상을 마로 바꿈
+		Controller->SelectPosition(6, RedKnight);
+		Controller->SelectPosition(2, RedElephant); // 상을 마로 바꿈
+		Controller->SelectPosition(7, RedElephant);
+	}
+	else if (GetWorld()->GetFirstPlayerController()->GetRemoteRole() == ROLE_Authority)
+	{
+		Controller->SelectPosition(83, BlueKnight); // 상을 마로 바꿈
+		Controller->SelectPosition(88, BlueKnight);
+		Controller->SelectPosition(82, BlueElephant); // 상을 마로 바꿈
+		Controller->SelectPosition(87, BlueElephant);
+	}
+	StartButtonActivate();
+}
+```
+<br>
+버튼을 누르면 RPC를 이용해서 서버 클라이언트의 상차림을 변경합니다.<br>
+
+|서버|클라이언트|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481110-bfd4f941-8856-4d31-95e6-9a1c382764df.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481115-de66fae4-0a47-4f2a-aa91-ba43a60efb99.png" width="500">|
+|<img src="https://user-images.githubusercontent.com/91234912/221481118-fed3887a-4541-4c07-b3f0-7e9dd8dde16f.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481124-7bcf09db-c51d-42f4-aad7-00f2fbdfc19a.png" width="500">|
