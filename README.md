@@ -446,3 +446,128 @@ void USelectPositionUserWidget::SelectButton1_Callback() // 마상마상
 
 ## 5 주차<a name='8'></a>
  [목차로 돌아가기](#0)<br>
+ 
+ 필수 요구조건중 하나인 부활을 구현하려고 합니다. 장기를 꽤나 좋아하는 입장에서 장기를 두다가 답답했던 적을 생각해 봤습니다.<br>
+ 
+ |한 나라|초 나라|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481192-93a47a0d-0805-443c-bf06-b53dbc92ea90.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481196-046e7339-6c11-44c0-996a-5ea8414376ec.png" width="500">|
+<br>
+제가 생각했을 때 가장 골치 아픈 상황입니다.<br>
+서로 수비적인 장기를 하는 경우 게임이 매우 지루해집니다. 모든 기물을 부활 시킬 수도 있겠지만, 졸과 사만 부활 시키려고 합니다.<br><br>
+저런 상황에서 졸이 한칸 뒤에서 부활하고 부활하는 위치에 있는 기물 즉 아군이든 적이든 상관없이 파괴하면 재밌겠다는 생각이 들었습니다. 부활 공격으로 졸이나 사를 죽이면 더 이상 부활하지 못하게 만들어도 좋겠네요.<br>
+
+<br>
+-JanggiGameStateBase.cpp
+<br>
+
+```c++
+void AJanggiGameStateBase::AddResurrectionPieces(int32 curPosition, int32 resurrectPosition, int32 resurrectTurn)
+{
+	TMap<int32, int32> temp;
+	temp.Empty();
+	temp.Add(boardIndexArr[curPosition], resurrectPosition);
+
+	resurrectionPos.Add(temp); // Key = 부활 할 말, value : 부활 장소
+	resurrectionTurn.Add(resurrectTurn); // 부활 턴
+}
+```
+<br>
+
+부활 해야 하는 말이 죽으면 일정 턴 뒤에 되살아나는 방식입니다. 말이 죽었을 때 부활 시킬 위치를 받고 해당말을 일정 턴 뒤에 부활 시킵니다.<br>
+
+<br>
+-Board.cpp
+
+```c++
+void ABoard::IsMove()
+{ 
+	...
+
+	if (JanggiState->Resurrection())
+	{
+		BP_ResurrectionEvent();
+	}
+}
+```
+<br>
+이 턴은 각자 착수 할 경우 JanggiState->Resurrection() 함수가 실행되면서 턴이 하나씩 줄어듭니다.<br>
+턴이 0이 되면 BP_ResurrectionEvent()가 실행되면서 저장된 위치에 말이 부활하고 부활 대기열에서 삭제됩니다.<br><br>
+
+ |한 나라|초 나라|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481184-ae098c8f-4ae6-4d63-afd6-ff51e5d5ee32.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481190-f776ad8e-fa7b-41de-95c2-9612947b8a34.png" width="500">|
+<br>
+
+구현 결과물입니다. 의도한대로 잘 작동합니다.<br><br>
+장기의 경우 시간패가 있습니다. 제한시간은 정해져 있으며, 시간을 전부 사용한 경우 즉시 패배합니다.<br>
+기존에 만들어 뒀던 시간 위젯을 조금 다듬어서 상대방 시간과 내 시간이 보이게 만듭니다.
+<br>
+-TimerUserWidget.cpp
+
+```c++
+void UTimerUserWidget::StartTimer()
+{
+	// 타이머 핸들러를 통해 시간을 업데이트한다.
+	GetWorld()->GetTimerManager().SetTimer(timerHandle, this, &UTimerUserWidget::CountDown, 1.f, true, 0.0);
+	JanggiState = Cast<AJanggiGameStateBase>(GetWorld()->GetGameState());
+}
+```
+<br>
+게임이 시작하면 StartTimer 함수를 호출해서 시간을 세기 시작하고<br>
+
+-TimerUserWidget.cpp
+
+```c++
+void UTimerUserWidget::CountDown()
+{
+	const int Red = 1;
+	const int Blue = 2;
+
+	if (GetWorld()->GetFirstPlayerController()->GetLocalRole() == ROLE_Authority) // 서버 전용
+	{
+		if (enemyMinute == 0 && enemySeconds == 0) // 상대의 시간이 없을 때
+		{
+			for (auto Iter = GetWorld()->GetPlayerControllerIterator(); Iter; Iter++)
+			{
+				Cast<AJanggiPlayerController>(Iter->Get())->GameOver(true, Red);
+			}
+		}
+		else if (myMinute == 0 && mySeconds == 0) // 내 시간이 없을 때
+		{
+			for (auto Iter = GetWorld()->GetPlayerControllerIterator(); Iter; Iter++)
+			{
+				Cast<AJanggiPlayerController>(Iter->Get())->GameOver(true, Blue);
+			}
+		}
+		else if (JanggiState->GetGameTurn() == Red) // 한 나라 턴일 때
+		{
+			CountMyTime();
+		}
+		else // 상대 턴일 때
+		{
+			CountEnemyTime();
+		}
+	}
+	
+	else // 클라일 때
+	{
+		if (JanggiState->GetGameTurn() == Blue) // 초 나라 턴일 때
+		{
+			CountMyTime();
+		}
+		else // 상대 턴일 때
+		{
+			CountEnemyTime();
+		}
+	}
+}
+```
+
+상대의 착수 정보만 받아와서 시간을 따로 셉니다.<br><br>
+
+<img src="https://user-images.githubusercontent.com/91234912/221481197-ad6e222f-85b5-4281-9074-6d9fff85e5e8.png" width="800"><br><br>
+이제 서로 착수 할 때마다 시간이 넘어갑니다. 남은 시간이 0이 되었을 때 패배화면을 띄워야 합니다.
+
+## 6 주차<a name='9'></a>
+ [목차로 돌아가기](#0)<br>
