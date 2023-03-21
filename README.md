@@ -389,5 +389,5 @@ void USelectPositionUserWidget::StartButtonCallback()
 |:-----:|:-----:|
 |<img src="https://user-images.githubusercontent.com/91234912/221481100-2e8dfe4c-8b7e-4cdd-a9ee-58fea09dd41d.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481095-328f0c1a-137e-42b1-b096-07cc3aad54f0.png" width="500">|
 <br>
-각각 준비가 되지 않으면 시작하지 않.
+각각 준비가 되지 않으면 시작하지 않습니다.
 	
