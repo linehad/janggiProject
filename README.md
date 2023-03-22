@@ -240,9 +240,10 @@ nx = xIndex + straightX[i];
 <img src="https://user-images.githubusercontent.com/91234912/221480939-421d6aa2-dc93-4def-bd34-78962d4f7adc.png" width="800"><br>
 
 다음과 같이 나옵니다. 아직 앞에 말이 있건 없건 맵의 끝까지 탐색하기 때문입니다. 여기서 추가적으로 차는 궁 안에 들어 갈 경우 대각선 이동이 가능합니다.<br>
-<img src="https://user-images.githubusercontent.com/91234912/221480954-8450e3d6-4058-4ee6-b12b-1d2625779f4a.png" width="800"><br>
+	
+<img src="https://user-images.githubusercontent.com/91234912/221480954-8450e3d6-4058-4ee6-b12b-1d2625779f4a.png" width="800" height ="300"><br><br>
 
-좌표를 엑셀로 표현해 보았습니다. 궁 위치가 X값은 동일한데 Y값만 달라지는 것을 볼 수 있습니다.<br>
+좌표를 엑셀로 표현해 보았습니다. 궁 위치가 X값은 동일한데 Y값만 달라지는 것을 볼 수 있습니다. 
 이를 참고해서 차의 대각선 이동을 구현합니다.<br>
 
 |대각 상|대각 하|
@@ -347,7 +348,9 @@ IsMove함수에 조건을 추가하고 CheckEnemy 함수를 작성해서 적과 
 ## 4 주차<a name='7'></a>
  [목차로 돌아가기](#0)<br>
 상의 경우 마에서 대각선으로 한칸만 더 이동 탐색하면 됩니다.<br>
-<img src="https://user-images.githubusercontent.com/91234912/226301415-13958098-24f0-46ea-b47f-a192c12bdc92.PNG" width="500"><br>
+	
+<img src="https://user-images.githubusercontent.com/91234912/226301415-13958098-24f0-46ea-b47f-a192c12bdc92.PNG" width="500" height ="300"><br><br>
+	
 구현하면 다음과 같이 보입니다. 이제 모든 말의 이동이 완료되었습니다. 저번주에 만들었던 위젯을 통해서 상차림을 구현합니다.<br>
 상차림 구현 전에 서버 클라이언트 모두 선택 완료를 누를 경우에 게임이 시작하게 바꿉니다.<br>
 
@@ -573,7 +576,7 @@ void UTimerUserWidget::CountDown()
 상대의 착수 정보만 받아와서 시간을 따로 셉니다.<br><br>
 
 <img src="https://user-images.githubusercontent.com/91234912/221481197-ad6e222f-85b5-4281-9074-6d9fff85e5e8.png" width="800"><br><br>
-이제 서로 착수 할 때마다 시간이 넘어갑니다. 남은 시간이 0이 되었을 때 패배화면을 띄워야 합니다.
+이제 서로 착수 할 때마다 시간이 넘어갑니다. 또한 턴도 각자 세기 시작합니다. 남은 시간이 0이 되었을 때 패배화면을 띄워야 합니다.
 
 ## 6 주차<a name='9'></a>
  [목차로 돌아가기](#0)<br>
@@ -688,9 +691,9 @@ void ATutorialJanggiBoard::TutorialFlow(int32 index)
 	case 2:
 		DownPiecies(king);
 		break;
-	
+
 	...
-	
+
 	case 23:
 		DownBoard(UpDownIndex, king);
 		UpDownIndex.Empty();
@@ -716,3 +719,94 @@ void ATutorialJanggiBoard::TutorialFlow(int32 index)
 
 마지막 처음으로를 누르면 튜토리얼의 첫번째 흐름으로 돌아가고, 메인메뉴로 돌아가기 버튼을 누르면 메인메뉴 레벨로 이동합니다.<br>
 튜토리얼 구현이 완료되면서 필수 요구사항은 전부 만족했습니다.
+
+## 7 주차<a name='10'></a>
+ [목차로 돌아가기](#0)<br>
+	
+요구사항은 구현했지만 말의 상태정보를 볼 수 없다는 점이 걸립니다. 이를 위해서 마우스 오버 이벤트를 작성합니다.<br>
+<br>
+-JanggiPlayerController.cpp
+	
+```c++
+void AJanggiPlayerController::BeginPlay()
+{
+	...
+	bEnableMouseOverEvents = true;
+	...
+}
+```
+
+<br> 마우스 오버 이벤트를 활성화 하고
+<br>
+-Board.cpp
+
+```c++
+void ABoard::ShowPowerHealthMouseOver(UPrimitiveComponent* TouchedComponent)
+{
+	for (int i = 0; i < pieciesMesh.Num(); i++)
+	{
+		if (pieciesMesh[i] == TouchedComponent) {
+			showHealthPos = i;
+			break;
+		}
+	}
+	int32 pieciesIndex = JanggiState->GetBoardIndexArr()[showHealthPos];
+	JanggiController->ShowPowerHealth(GetPiecies(pieciesIndex), GetPower(pieciesIndex), JanggiState->GetHealthATKArr()[showHealthPos]);
+}
+```
+
+장기말에 마우스가 올라갔을 때 위젯을 업데이트 하도록 작성합니다.<br>
+<br>
+
+ |오버 전|오버 후|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481355-2ef32b5c-e0db-4ed7-bf22-8a8b8a8f4966.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481358-68e27989-7a0a-451b-80a7-138ce7547478.png" width="500">|
+|<img src="https://user-images.githubusercontent.com/91234912/221481359-003a5c96-6cfe-4728-9ccf-b8967732e44f.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481361-74d751dd-7a23-48c3-b3b5-7013f63788eb.png" width="500">|
+
+<br>이제 공격할 때나 공격 당했을 때 마우스을 기물 위에 올려놓으면 해당 기물의 공격력과 남은 체력이 표기됩니다.<br>
+<br>
+<img src="https://user-images.githubusercontent.com/91234912/221481342-dacc769a-be44-402b-856c-9a0adfc31d2b.png" width="800"><br>
+
+
+튜토리얼 흐름에 추가해줍니다. 마우스 오버기능이 구현되었습니다.<br>
+하지만 이대로는 공격 받은 줄도 모를 것입니다. 스타터 팩에 explosion 블루프린트가 있습니다.
+공격 받을 때 이것을 재생해 줄 것입니다.<br>
+
+|공격 전|공격 후|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481364-98520370-8c98-4e91-a328-34b6f69524fe.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481367-311e433a-700a-4048-aae9-4145fc05c9aa.png" width="500">|
+
+<br>
+쾅 터지는 이펙트와 함께 소리가 나게 됩니다. 이제 누군가 공격하거나 받으면 어디가 공격 받았는지 알 수 있습니다.
+
+<br>
+<img src="https://user-images.githubusercontent.com/91234912/221481362-240fe1d7-bce2-493d-bc18-5f1c2acdb9ca.png" width="800"><br>
+
+승리와 패배시 화면을 꾸밉니다. 승리시에는 양 옆에서 칼이 부딯히고 패배시에는 칼에 찔린 것 처럼 피가 화면을 가립니다. 결판이 나면 게임 종료 버튼이 활성화 됩니다.<br><br>
+추가적으로 다시하는 버튼과 메인메뉴로 돌아가는 버튼이 있으면 좋겠습니다.
+	
+|다시하기|다시하기|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481352-2d5537c3-d4b6-43d8-939c-c181e1d23ca8.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481345-3cdff344-1630-4115-999c-1ca4572cf987.png" width="500">|
+
+<br>
+	
+다시하기를 누를 경우 상대를 대기하는 화면으로 넘어갑니다. 둘다 다시하기를 누르기 전까지는 시작하지 않고 다시하기 버튼을 누른쪽은 장기말의 배열을 초기상태로 되돌립니다.
+	
+|다시하기 할 경우|종료한 경우|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481348-9fd96994-360f-4474-90ff-0a6e180c2034.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481363-b95fda0c-067b-4d1f-ac83-fb335c8d7466.png" width="500">|
+
+<br>
+다시하기를 할 경우 기물 선택창을 띄우고 똑같이 게임을 진행할 수 있습니다.<br>
+하지만 다른쪽이 메인메뉴로 돌아가거나 게임을 종료한 경우 나머지 한쪽은 메인메뉴로 돌아갑니다.<br>
+이로써 다시하기를 누르고 무한히 대기하는 경우가 사라졌습니다.<br><br>
+	
+게임에 소리가 없으니 심심합니다. 배경음악 및 여러 이팩트들을 찾고 편집하고 waw 형태로 변환해서 사용가능하도록 만들어 줍니다.<br>
+	
+|다시하기 할 경우|종료한 경우|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481335-4a8ef2be-7c38-4cd8-b8ed-20748306b0a1.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481341-5f1e2288-267e-427f-9b4b-665aa65111a3.png" width="500">|
+	
+사운드메니저 클래스를 하나 만들고 나열자를 통해서 원하는 소리를 직관적으로 재생할 수있게 만들었습니다.<br>
+착수 할 때, 말이 죽을 때, 버튼을 누를 때 등 배경음악과 더 붙어 게임의 사운드가 풍부해졌습니다.<br>
