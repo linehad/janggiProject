@@ -425,6 +425,7 @@ void USelectPositionUserWidget::SelectButton1_Callback() // 마상마상
 |:-----:|:-----:|
 |<img src="https://user-images.githubusercontent.com/91234912/221481110-bfd4f941-8856-4d31-95e6-9a1c382764df.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481115-de66fae4-0a47-4f2a-aa91-ba43a60efb99.png" width="500">|
 |<img src="https://user-images.githubusercontent.com/91234912/221481118-fed3887a-4541-4c07-b3f0-7e9dd8dde16f.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481124-7bcf09db-c51d-42f4-aad7-00f2fbdfc19a.png" width="500">|
+
 <br>
 
 서로 상차림이 변경된 것을 확인할 수 있습니다. 이제 이동을 동기화 합니다.<br>
@@ -432,6 +433,7 @@ void USelectPositionUserWidget::SelectButton1_Callback() // 마상마상
 |서버|클라이언트|
 |:-----:|:-----:|
 |<img src="https://user-images.githubusercontent.com/91234912/221481107-91efab6f-67c7-426c-b5d7-76327a7e3978.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481109-af9cf953-a089-4714-8d11-a153e257f6f8.png" width="500">|
+
 <br>
 서버는 서버에서 먼저 장기를 두고, 클라이언트에서 서버의 움직임을 재현합니다.<br>
 클라이언트는 클라에사 먼저 두고 서버에서 두게합니다. 이렇게 함으로써 서로의 움직임이 동기화 됩니다.
@@ -452,6 +454,7 @@ void USelectPositionUserWidget::SelectButton1_Callback() // 마상마상
  |한 나라|초 나라|
 |:-----:|:-----:|
 |<img src="https://user-images.githubusercontent.com/91234912/221481192-93a47a0d-0805-443c-bf06-b53dbc92ea90.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481196-046e7339-6c11-44c0-996a-5ea8414376ec.png" width="500">|
+
 <br>
 제가 생각했을 때 가장 골치 아픈 상황입니다.<br>
 서로 수비적인 장기를 하는 경우 게임이 매우 지루해집니다. 모든 기물을 부활 시킬 수도 있겠지만, 졸과 사만 부활 시키려고 합니다.<br><br>
@@ -498,6 +501,7 @@ void ABoard::IsMove()
  |한 나라|초 나라|
 |:-----:|:-----:|
 |<img src="https://user-images.githubusercontent.com/91234912/221481184-ae098c8f-4ae6-4d63-afd6-ff51e5d5ee32.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481190-f776ad8e-fa7b-41de-95c2-9612947b8a34.png" width="500">|
+
 <br>
 
 구현 결과물입니다. 의도한대로 잘 작동합니다.<br><br>
@@ -514,6 +518,7 @@ void UTimerUserWidget::StartTimer()
 	JanggiState = Cast<AJanggiGameStateBase>(GetWorld()->GetGameState());
 }
 ```
+
 <br>
 게임이 시작하면 StartTimer 함수를 호출해서 시간을 세기 시작하고<br>
 
@@ -572,3 +577,142 @@ void UTimerUserWidget::CountDown()
 
 ## 6 주차<a name='9'></a>
  [목차로 돌아가기](#0)<br>
+ 
+ -JanggiGameStateBase.cpp<br>
+ 
+ ```c++
+ bool AJanggiGameStateBase::AttackPiecies(int32 curPosition, int32 lastClick)
+{
+	...
+	if (boardIndexArr[curPosition] == RedKing && healthATKArr[curPosition] <= 0) // 공격 지점이 한나라 왕이고 왕의 체력이 0이 되었을 때 실행
+		{
+			UE_LOG(LogTemp, Error, TEXT("RedKing Die"));
+			Cast<AJanggiPlayerController>(GetWorld()->GetFirstPlayerController())->GameOver(false, Blue);
+			return true; // 왕 파괴
+		}
+
+		else if (boardIndexArr[curPosition] == BlueKing && healthATKArr[curPosition] <= 0) // 공격 지점이 초나라 왕이고 왕의 체력이 0이 되었을 때 실행
+		{
+			UE_LOG(LogTemp, Error, TEXT("BlueKing Die"));
+			Cast<AJanggiPlayerController>(GetWorld()->GetFirstPlayerController())->GameOver(false, Red);
+			return true; // 왕 파괴
+		}
+	...
+}	
+```
+
+ <br>
+ 공격, 피격 이벤트를 구현하고 여기에서 왕이 죽었는지 안죽었는지를 체크합니다. <br>
+ 
+  |한 나라|초 나라|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481281-dc12abbd-7cec-493b-b7e1-da6e079accf4.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481283-886cbf57-2c5c-4234-b3c0-a19e813427bf.png" width="500">|
+
+<br>
+
+이로써 왕이 죽었을 때 승패가 가려집니다. 추가적으로 시간패도 구현합니다.<br><br>
+
+  |한 나라|초 나라|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481285-f74fc9cc-4028-4034-8f00-4bb708de4e51.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481266-5c82a7cd-6a8c-42b5-94c4-1ba36fca5bb5.png" width="500">|
+
+<br>
+
+요구사항이었던 패배 승리가 구현되었습니다. 다음 요구사항의 필수 조건인 튜토리얼을 만듭니다.<br>
+<img src="https://user-images.githubusercontent.com/91234912/221481271-69f503c9-06b7-45a4-a87d-d836ddbffe6d.png" width="800"><br><br>
+메인화면을 꾸미고 튜토리얼로 진입하는 버튼을 만듭니다. 튜토리얼 레벨을 따로 만들어서 버튼이 눌리면 튜토리얼 레벨로 넘어갑니다.<br>
+튜토리얼은 설명하는 형식으로 진행할 것입니다. 사용자의 시선을 끌만한 Png 파일을 찾아봅니다.
+
+  |화살표|박스|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481269-8f65ce6d-251c-4a5f-b04b-d19441ddbdfd.png" width="500" height ="300">|<img src="https://user-images.githubusercontent.com/91234912/221481270-4b937e21-570d-48bf-b558-b98da6994d14.png" width="500" height ="300">|
+
+<br>
+
+화살표와 네모박스에 애니메이션을 추가해서 설명을 용이하게 만들겠습니다.<br>
+
+-TutorialUserWidget.cpp
+<br>
+
+ ```c++
+ void UTutorialUserWidget::CallBack_NextButton()
+{
+	tutoraialIndex++;
+	if (tutoraialIndex >= tutorialLines.Num()) // 배열 범위 넘어갈 경우
+	{
+		tutoraialIndex--;
+		return;
+	}
+
+	switch (tutoraialIndex)
+	{
+	case 0:
+		PreviousButton->SetVisibility(ESlateVisibility::Hidden);
+		break;
+	
+	...
+	
+		case 23:
+		KingImage->SetVisibility(ESlateVisibility::Hidden);
+		NextButton->SetVisibility(ESlateVisibility::Hidden);
+		SkillButton->SetVisibility(ESlateVisibility::Hidden);
+
+		MainButton->SetVisibility(ESlateVisibility::Visible);
+		ResetButton->SetVisibility(ESlateVisibility::Visible);
+		break;
+	default:
+		break;
+	}
+
+	TutoralTextBlock->SetText(FText::FromString(tutorialLines[tutoraialIndex]));
+	JanggiBoard->TutorialFlow(tutoraialIndex);
+}
+```
+
+<br>
+-TutorialJanggiBoard.cpp
+<br>
+
+ ```c++
+void ATutorialJanggiBoard::TutorialFlow(int32 index)
+{
+	const int knight = 51;
+	const int redPawn = 58;
+	const int pawn1 = 68;
+	const int pawn2 = 67;
+	const int guards = 66;
+	const int king = 76;
+	const int elephant = 50;
+	switch (index)
+	{
+	case 2:
+		DownPiecies(king);
+		break;
+	
+	...
+	
+	case 23:
+		DownBoard(UpDownIndex, king);
+		UpDownIndex.Empty();
+
+		DownPiecies(pawn1);
+		break;
+	default:
+		break;
+	}
+}
+```
+
+<br>
+
+튜토리얼 전용 위젯과 보드에는 각 번호에 맞는 이벤트 흐름이 있으며, 이는 버튼이 눌릴 때마다 실행됩니다. 실제로 게임을 해볼 순 없지만 게임을 이해시키는데 적합합니다.<br>
+
+ |튜토리얼|튜토리얼|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221481274-cc011b8d-1401-49bb-8f84-2752878f821e.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481276-50ce0af1-9d53-4555-96ed-3ba8729db407.png" width="500">|
+|<img src="https://user-images.githubusercontent.com/91234912/221481287-278d0aa9-c626-4466-aad8-ea8023fa646b.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481289-01d0df4b-2510-4930-ba0d-f42f471eb2f5.png" width="500">|
+
+<br>
+
+마지막 처음으로를 누르면 튜토리얼의 첫번째 흐름으로 돌아가고, 메인메뉴로 돌아가기 버튼을 누르면 메인메뉴 레벨로 이동합니다.<br>
+튜토리얼 구현이 완료되면서 필수 요구사항은 전부 만족했습니다.
