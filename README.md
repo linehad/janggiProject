@@ -267,15 +267,14 @@ nx = xIndex + straightX[i];
 더 이상 포는 포끼리 넘을 수도 먹을 수도 없게 되었습니다.<br>
 <br>
 이제 궁과 사를 구현합니다. 궁과 사는 일정 범위 내에서만 움직일 수 있어야 합니다.<br>
-<img src="https://user-images.githubusercontent.com/91234912/221480984-a942a963-11d7-4568-a733-a81d47db467d.png" width="800"><br>
-
-제약을 추가해 봤을 때 궁 범위 바깥으로는 움직일 수 없는 것을 확인 할 수 있습니다. 하지만 궁 과 사는 1칸 범위에서 자유롭게 움직일 수 있는데, 특히 대각선 끝에 위치 한 경우 가운데로 움직일 수 있습니다.<br>
-가운데에 있는 경우에는 모든 방향으로 1칸 이동이 가능합니다. 이를 적용합니다.
 
 |궁 1|궁 2|
 |:-----:|:-----:|
 |<img src="https://user-images.githubusercontent.com/91234912/221481040-a4b2df6a-cc81-4eb3-9646-172bcf1b4888.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221481029-d3ce0a1a-92a3-4120-8a05-b4032560dc89.png" width="500">|
 |<img src="https://user-images.githubusercontent.com/91234912/221480956-3e75736f-82a4-4823-9c96-805e8ef020c9.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221480960-3e396710-300d-41e3-ad53-a07ed803b7c0.png" width="500">|
+
+<br>제약을 추가해 봤을 때 궁 범위 바깥으로는 움직일 수 없는 것을 확인 할 수 있습니다. 하지만 궁 과 사는 1칸 범위에서 자유롭게 움직일 수 있는데, 특히 대각선 끝에 위치 한 경우 가운데로 움직일 수 있습니다.<br>
+가운데에 있는 경우에는 모든 방향으로 1칸 이동이 가능합니다. 이를 적용합니다.<br>
 
 <br>
 마를 구현합니다. 마의 경우 상하좌우 중 한 방향으로 먼저 이동 했을 경우 막혀 있으면 그 방향으로 이동이 불가능합니다. 막혀있지 않으면 진행 방향 대각선으로 이동이 가능합니다. 이를 적용합니다.<br>
@@ -322,6 +321,7 @@ bool JanggiPieces::CheckEnemy(const TArray<int32>& boardIndexArr, int32 xIndex, 
 ```
 <br>
 IsMove함수에 조건을 추가하고 CheckEnemy 함수를 작성해서 적과 아군을 식별하게 만듭니다. 적일 경우 거기 까지만 이동이 가능하고 아군일 경우 이동이 불가능하게 만들어 줍니다. 이를 적용하면 다음과 같습니다.<br>
+<img src="https://user-images.githubusercontent.com/91234912/221480984-a942a963-11d7-4568-a733-a81d47db467d.png" width="800"><br>
 
 |기물 1|기물 2|
 |:-----:|:-----:|
