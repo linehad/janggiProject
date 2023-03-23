@@ -810,3 +810,73 @@ void ABoard::ShowPowerHealthMouseOver(UPrimitiveComponent* TouchedComponent)
 	
 사운드메니저 클래스를 하나 만들고 나열자를 통해서 원하는 소리를 직관적으로 재생할 수있게 만들었습니다.<br>
 착수 할 때, 말이 죽을 때, 버튼을 누를 때 등 배경음악과 더 붙어 게임의 사운드가 풍부해졌습니다.<br>
+
+## 8 주차<a name='11'></a>
+ [목차로 돌아가기](#0)<br>
+ 
+ 선택 시항인 스킬을 구현합니다. 스킬은 이동을 좀더 자유롭게 하는게 좋겠습니다.<br>
+ 
+ 1. **졸** : 전방위 이동이 가능해 집니다.
+ 2. **마** : 대각선 이동을 직진 이동으로 바꿉니다.
+ 3. **상** : 가로막는 적들을 무시하고 움직입니다.
+ 
+ <br>
+ 이상 3개 기물에 능력을 부여해 줄 예정입니다.<br>
+ 기존 이동 방식은 **JanggiFunction.cpp**에 구현되어 있는 함수 **CheckMove**를 호출하고 **CheckMove**에서는 **JanggiPieces** 클래스를 이용해서 이동가능한 위치를 연산한 뒤 값을 넘겨줍니다.<br><br>
+ 
+ 따라서 **JanggiFunction.cpp**에 **CheckSkillMove**함수를 추가해서 스킬 버튼이 눌릴경우 **CheckSkillMove**함수가 호출되게 만들어서 새로운 이동위치를 넘겨주겠습니다.<br>
+ 
+ -JanggiFunction.cpp
+ 
+ ```c++
+TArray<int32> CheckSkillMove(const TArray<int32>& boardIndexArr, int32 pos, int32 turn)
+{
+	PiecesSkill Pieces;
+	
+	...
+	
+	if (turn == Blue)
+	{
+		switch (boardIndexArr[pos])
+		{
+		case BlueRook:
+			//possibleMove = Pieces.Rook(xIndex, yIndex, boardIndexArr, PalaceYCenter, PalaceStartingPoint, PalaceEndPoint);
+			break;
+
+		case BlueKnight:
+			possibleMove = Pieces.Knight(xIndex, yIndex, boardIndexArr, PalaceYCenter, PalaceStartingPoint, PalaceEndPoint);
+			break;
+
+		case BlueElephant:
+			possibleMove = Pieces.Elephant(xIndex, yIndex, boardIndexArr);
+			break;
+	...
+	
+	default:
+			break;
+		}
+	}
+	
+	...
+		return possibleMove;
+}
+```
+
+<br>
+스킬 버튼이 눌리면 새로운 형태로 이동경로를 계산해서 돌려주는 코드가 작성되었습니다.<br>
+이제 스킬을 추가하고 싶다면 해당 위치에 코드를 짜기만 하면 됩니다.<br>
+
+|스킬 버튼 누르기 전|누른 후|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221731772-f3fdc221-8b30-47b3-930e-0baed98d3b19.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221731780-5dd13895-475a-4f39-ae37-cb19346e3d82.png" width="500">|
+
+<br>스킬 버튼이 눌러지고 실제로 이동하면 남은 스킬 개수가 줄어들고 0이 되면 사용할 수 없습니다. 다른 기물들의 스킬들도 추가합니다.
+
+|스킬 버튼 누르기 전|누른 후|
+|:-----:|:-----:|
+|<img src="https://user-images.githubusercontent.com/91234912/221731748-0ec558e2-ed0a-4dcd-a1b5-d9fb540b57d7.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221731751-ecdf6ea8-ed15-40ef-a175-8f2a0e218ac8.png" width="500">|
+|<img src="https://user-images.githubusercontent.com/91234912/221731756-10ba705e-0ac8-45b2-abb9-b7065cc9e15a.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221731759-8887b7a4-16f7-4007-a79d-26e84584817e.png" width="500">|
+|<img src="https://user-images.githubusercontent.com/91234912/221731760-176dfebd-aed1-43fb-a2ad-06f2cbcbe949.png" width="500">|<img src="https://user-images.githubusercontent.com/91234912/221731767-1bcb6fe1-f73b-4ddb-b17f-618f69fb7924.png" width="500">|
+
+<br>
+스킬 구현까지 완료되면서 장기 프로젝트가 완성되었습니다.
