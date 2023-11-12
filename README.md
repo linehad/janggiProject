@@ -1,5 +1,8 @@
 # 게임명 : 커스텀 장기
 ## 다운로드 링크
+동일한 실행파일 입니다 구글 드라이브 다운로드 혹은 분할 압축된 파일을 통해 게임을 실행하실 수 있습니다.
+<br>
+<br>
 구글 드라이브
 <br>
 https://drive.google.com/file/d/1LEfjsfYcbhGu7QUJ-CmZjOwmQTUFvPcB/view?usp=drive_link 
