@@ -4,6 +4,7 @@
 <br>
 https://drive.google.com/file/d/1LEfjsfYcbhGu7QUJ-CmZjOwmQTUFvPcB/view?usp=drive_link 
 <br>
+<br>
 패키징된 실행파일은 **JanggiEXE**에 분할 압축이 되어 있습니다. 반디집으로 풀어주세요<br>
  
 ## 언리얼 실행시 
