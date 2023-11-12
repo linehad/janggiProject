@@ -1,8 +1,10 @@
 # 게임명 : 커스텀 장기
 ## 다운로드 링크
+구글 드라이브
+<br>
 https://drive.google.com/file/d/1LEfjsfYcbhGu7QUJ-CmZjOwmQTUFvPcB/view?usp=drive_link 
 <br>
-패키징된 실행파일은 **JanggiEXE**에 분할 압축이 되어 있습니다.<br>
+패키징된 실행파일은 **JanggiEXE**에 분할 압축이 되어 있습니다. 반디집으로 풀어주세요<br>
  
 ## 언리얼 실행시 
 룰이 복잡하니 튜토리얼을 진행해 주시기 바랍니다. 이 프로젝트는 **언리얼4** 작성되었습니다.로<br>
