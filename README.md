@@ -1,6 +1,7 @@
 # 게임명 : 커스텀 장기
 ## 다운로드 링크
-https://drive.google.com/file/d/1LEfjsfYcbhGu7QUJ-CmZjOwmQTUFvPcB/view?usp=drive_link <br>
+https://drive.google.com/file/d/1LEfjsfYcbhGu7QUJ-CmZjOwmQTUFvPcB/view?usp=drive_link 
+<br>
 패키징된 실행파일은 **JanggiEXE**에 분할 압축이 되어 있습니다.<br>
  
 ## 언리얼 실행시 
